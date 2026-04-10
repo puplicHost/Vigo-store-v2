@@ -1,0 +1,253 @@
+{
+  "info": {
+    "name": "Vigo Store API",
+    "_postman_id": "b1f7c9c0-vigo-store-api",
+    "description": "Complete API collection for Vigo Store",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "🔓 Public Endpoints",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/health"
+          }
+        },
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/products?page=1&limit=12&search=&category="
+          }
+        },
+        {
+          "name": "Get Product By ID",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/products/1"
+          }
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/api/categories"
+          }
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/register"
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@vigo.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": "{{base_url}}/api/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔒 Protected Endpoints",
+      "item": [
+        {
+          "name": "Get Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/orders"
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"quantity\": 2\n    }\n  ]\n}"
+            },
+            "url": "{{base_url}}/api/orders"
+          }
+        }
+      ]
+    },
+    {
+      "name": "👑 Admin Endpoints",
+      "item": [
+        {
+          "name": "Get Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/stats"
+          }
+        },
+        {
+          "name": "Admin Products List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/products"
+          }
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Product\",\n  \"price\": 100,\n  \"categoryId\": 1\n}"
+            },
+            "url": "{{base_url}}/api/admin/products"
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Product\",\n  \"price\": 150\n}"
+            },
+            "url": "{{base_url}}/api/admin/products/1"
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/products/1"
+          }
+        },
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/orders"
+          }
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"SHIPPED\"\n}"
+            },
+            "url": "{{base_url}}/api/admin/orders/1"
+          }
+        },
+        {
+          "name": "Get Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/admin/users"
+          }
+        }
+      ]
+    }
+  ]
+}
