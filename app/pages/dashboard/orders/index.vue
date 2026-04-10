@@ -51,7 +51,12 @@ definePageMeta({
   layout: 'dashboard'
 })
 
-const { data: orders, pending, refresh } = await useFetch('/api/admin/orders')
+const { data: ordersData, pending, refresh } = useFetch('/api/admin/orders', {
+  lazy: true,
+  server: false,
+  default: () => []
+})
+const orders = computed(() => ordersData.value || [])
 
 function statusClass(status) {
   const classes = {

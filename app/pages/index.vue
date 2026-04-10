@@ -44,15 +44,25 @@ const page = ref(1)
 const search = ref('')
 const selectedCategory = ref('')
 
-const { data, pending } = useFetch('/api/products', {
+// Products fetch with lazy loading and safe defaults
+const { data, pending, error } = useFetch('/api/products', {
   query: computed(() => ({
     page: page.value,
     search: search.value,
     category: selectedCategory.value,
     limit: 12
   })),
-  watch: [page, search, selectedCategory]
+  lazy: true,
+  server: false,
+  default: () => ({ products: [], pagination: { page: 1, totalPages: 0 } })
 })
 
-const { data: categories } = await useFetch('/api/categories')
+// Categories fetch - non-blocking
+const { data: categoriesData } = useFetch('/api/categories', {
+  lazy: true,
+  server: true,
+  default: () => []
+})
+
+const categories = computed(() => categoriesData.value || [])
 </script>

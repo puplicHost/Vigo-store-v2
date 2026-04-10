@@ -50,7 +50,12 @@ const toast = useToast()
 
 const quantity = ref(1)
 
-const { data: product, pending } = await useFetch(`/api/products/${route.params.id}`)
+const { data: productData, pending } = useFetch(`/api/products/${route.params.id}`, {
+  lazy: true,
+  server: true,
+  default: () => null
+})
+const product = computed(() => productData.value)
 
 function addToCart() {
   for (let i = 0; i < quantity.value; i++) {

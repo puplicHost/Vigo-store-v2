@@ -32,7 +32,12 @@ export default defineEventHandler(async (event) => {
         totalPages: Math.ceil(total / limit)
       }
     }
-  } catch (error) {
-    throw createError({ statusCode: 500, statusMessage: 'Failed to fetch products' })
+  } catch (error: any) {
+    console.error('FULL ERROR in /api/products:', error)
+    throw createError({ 
+      statusCode: 500, 
+      statusMessage: 'Failed to fetch products',
+      data: { error: error?.message || 'Unknown error' }
+    })
   }
 })

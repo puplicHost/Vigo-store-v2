@@ -2,6 +2,8 @@ import 'dotenv/config'
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  srcDir: 'app/',
+  serverDir: '../server/',
   modules: [
     '@pinia/nuxt',
     '@nuxtjs/tailwindcss',

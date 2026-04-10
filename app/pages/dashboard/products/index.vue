@@ -49,7 +49,12 @@ definePageMeta({
   layout: 'dashboard'
 })
 
-const { data: products, pending, refresh } = await useFetch('/api/admin/products')
+const { data: productsData, pending, refresh } = useFetch('/api/admin/products', {
+  lazy: true,
+  server: false,
+  default: () => []
+})
+const products = computed(() => productsData.value || [])
 const showAddModal = ref(false)
 const editingProduct = ref(null)
 

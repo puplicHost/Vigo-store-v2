@@ -39,7 +39,12 @@ definePageMeta({
   layout: 'dashboard'
 })
 
-const { data: users, pending } = await useFetch('/api/admin/users')
+const { data: usersData, pending } = useFetch('/api/admin/users', {
+  lazy: true,
+  server: false,
+  default: () => []
+})
+const users = computed(() => usersData.value || [])
 
 function formatDate(date) {
   return new Date(date).toLocaleDateString()
